@@ -8,7 +8,7 @@ import java.util.List;
 public class Factorial {
 
     public static void main(String[] args) throws InterruptedException {
-        List<Long> inputNumbers = Arrays.asList(10000000L, 0L, 3435L, 35435L, 2324L, 4656L, 23L, 5556L);
+        List<Long> inputNumbers = Arrays.asList(10000000L, 0L, 3435L, 4656L, 2324L, 4656L, 23L, 5556L);
 
         List<FactorialThread> threads = new ArrayList<>();
 
@@ -23,12 +23,15 @@ public class Factorial {
         }
 
         for (int i = 0; i < inputNumbers.size(); i++) {
-            if (threads.get(i).isFinished()) {
+            FactorialThread t = threads.get(i);
+
+            if (t.isFinished()) {
                 System.out.println("Thread [" + i + "] has finished : Factorial of " +
                                     inputNumbers.get(i) + " = " + threads.get(i).getResult());
             } else {
                 System.out.println("Thread [" + i + "] still running : Factorial of " +
                         inputNumbers.get(i) + " is not yet available");
+                t.interrupt();
             }
         }
     }
@@ -51,7 +54,10 @@ public class Factorial {
         public BigInteger factorial(long n) {
             BigInteger tempResult = BigInteger.ONE;
 
-            for (long i = n; i >= 0; i--) {
+            for (long i = n; i > 0; i--) {
+                if (Thread.currentThread().isInterrupted()) {
+                    return BigInteger.ONE;
+                }
                 tempResult = tempResult.multiply(new BigInteger(Long.toString(i)));
             }
 
@@ -59,11 +65,11 @@ public class Factorial {
         }
 
         public BigInteger getResult() {
-            return result;
+            return this.result;
         }
 
         public boolean isFinished() {
-            return isFinished;
+            return this.isFinished;
         }
     }
 }
