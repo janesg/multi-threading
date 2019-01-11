@@ -8,7 +8,7 @@ import java.util.List;
 public class Factorial {
 
     public static void main(String[] args) throws InterruptedException {
-        List<Long> inputNumbers = Arrays.asList(10000000L, 0L, 3435L, 4656L, 2324L, 4656L, 23L, 5556L);
+        List<Long> inputNumbers = Arrays.asList(10000000L, 0L, 4L, 3435L, 4656L, 2324L, 4656L, 23L, 5556L);
 
         List<FactorialThread> threads = new ArrayList<>();
 
