@@ -9,6 +9,7 @@ import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -141,7 +142,7 @@ public class ReentrantLockFinance extends Application {
             Label nameLabel = new Label(cryptoName);
             nameLabel.setTextFill(Color.BLUE);
             nameLabel.setOnMousePressed(event -> nameLabel.setTextFill(Color.RED));
-            nameLabel.setOnMouseReleased((EventHandler) event -> nameLabel.setTextFill(Color.BLUE));
+            nameLabel.setOnMouseReleased((EventHandler<? super MouseEvent>) event -> nameLabel.setTextFill(Color.BLUE));
 
             grid.add(nameLabel, 0, row);
             grid.add(entry.getValue(), 1, row);
