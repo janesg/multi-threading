@@ -79,7 +79,7 @@ public class WaitNotify {
                 e.printStackTrace();
             }
             
-            System.out.println(Thread.currentThread().getName() + " : About to notify any waiting threads...");
+            System.out.println(Thread.currentThread().getName() + " : About to notify a single waiting thread...");
             
             notify();
 
@@ -108,7 +108,7 @@ public class WaitNotify {
                     e.printStackTrace();
                 }
                 
-                System.out.println(Thread.currentThread().getName() + " : About to notify any waiting threads...");
+                System.out.println(Thread.currentThread().getName() + " : About to notify a single waiting thread...");
                 
                 notify();
 
