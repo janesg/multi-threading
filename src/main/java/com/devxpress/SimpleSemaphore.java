@@ -8,25 +8,26 @@ import java.util.concurrent.Semaphore;
 enum Downloader {
     INSTANCE;
     
+    // Only allow a maximum of 3 threads to download in parallel by specifying 3 permits
+    //  - the 'true' parameter indicates use of fairness policy..longest runing thread gets priority
     private Semaphore semaphore = new Semaphore(3, true);
     
     public void downloadData() {
         
         try {
-            // System.out.println(Thread.currentThread().getName() + " : acquiring semaphore...");
             semaphore.acquire();
-            System.out.println(Thread.currentThread().getName() + " : semaphore acquired");
+            System.out.println(Thread.currentThread().getName() + " : semaphore acquired *** <<<--- ***");
             download();
         } catch (InterruptedException e) {
             e.printStackTrace();
         } finally {
             semaphore.release();
-            System.out.println(Thread.currentThread().getName() + " : semaphore released");
+            System.out.println(Thread.currentThread().getName() + " : semaphore released *** --->>> ***");
         }
     }
     
     private void download() {
-        System.out.println(Thread.currentThread().getName() + " : Simulation of downloading data...");
+        System.out.println(Thread.currentThread().getName() + " : simulating data download...");
         
         try {
             Thread.sleep(2000);
