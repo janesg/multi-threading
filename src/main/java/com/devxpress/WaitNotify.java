@@ -2,6 +2,9 @@ package com.devxpress;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class WaitNotify {
     
@@ -16,6 +19,7 @@ public class WaitNotify {
         for (int i = 0; i < 5 ; i++) {
             waiters.add(new Thread(() -> p.doWait()));
             waiters.add(new Thread(() -> p.doWaitUsingBlock()));
+            waiters.add(new Thread(() -> p.doAwaitUsingLock()));
         }
         
         List<Thread> notifiers = new ArrayList<>();
@@ -23,6 +27,7 @@ public class WaitNotify {
         for (int i = 0; i < 5 ; i++) {
             notifiers.add(new Thread(() -> p.doNotify()));
             notifiers.add(new Thread(() -> p.doNotifyUsingBlock()));
+            notifiers.add(new Thread(() -> p.doSignalUsingLock()));
         }
         
         for (Thread t : waiters) {
@@ -59,6 +64,9 @@ public class WaitNotify {
     //  - synchonized instance method
     //  - instance method whose whole body is bounded by a block protected using 'synchronized(this)'
     static class Processor {
+        
+        private static final Lock lock = new ReentrantLock();
+        private static final Condition condition = lock.newCondition();
         
         synchronized void doWait() {
             System.out.println(Thread.currentThread().getName() + " : About to wait...");
@@ -114,6 +122,40 @@ public class WaitNotify {
 
                 System.out.println(Thread.currentThread().getName() + " : ...finished notifying");
             }
+        }       
+
+        void doAwaitUsingLock() {
+            System.out.println(Thread.currentThread().getName() + " : About to await...");
+            try {
+                lock.lock();
+                condition.await();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } finally {
+                lock.unlock();
+            }
+            System.out.println(Thread.currentThread().getName() + " : ...finished awaiting");
+        }       
+    
+        void doSignalUsingLock() {
+            System.out.println(Thread.currentThread().getName() + " : About to sleep...");
+                
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+                
+            System.out.println(Thread.currentThread().getName() + " : About to signal the lock...");
+                
+            try {
+                lock.lock();
+                condition.signal();
+            } finally {
+                lock.unlock();
+            }
+
+            System.out.println(Thread.currentThread().getName() + " : ...finished signaling the lock");
         }       
     }
     
