@@ -3,7 +3,7 @@ package com.devxpress.mergesort;
 import java.util.Arrays;
 import java.util.Random;
 
-public class App {
+public class MergeSortApp {
     
     private static final Random random = new Random();
     

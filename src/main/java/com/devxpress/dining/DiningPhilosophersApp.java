@@ -3,7 +3,7 @@ package com.devxpress.dining;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class App {
+public class DiningPhilosophersApp {
     
     public static void main(String[] args) {
         

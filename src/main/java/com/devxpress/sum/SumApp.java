@@ -2,7 +2,7 @@ package com.devxpress.sum;
 
 import java.util.Random;
 
-public class App {
+public class SumApp {
     
     private static final Random random = new Random();
     
