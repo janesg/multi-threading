@@ -1,7 +1,5 @@
 package com.devxpress.mergesort;
 
-import java.util.Arrays;
-
 public class MergeSort {
     
     private int[] nums;
@@ -45,9 +43,7 @@ public class MergeSort {
     }
     
     private Thread createParallelSortThread(int low, int high, int numOfThreads) {
-        return new Thread(() -> {
-            mergeSortParallel(low, high, numOfThreads);
-        });
+        return new Thread(() -> mergeSortParallel(low, high, numOfThreads));
     }
     
     public void mergeSort(int low, int high) {
@@ -63,6 +59,7 @@ public class MergeSort {
         
         mergeSort(low, middle);
         mergeSort(middle + 1, high);
+
         merge(low, middle, high);
     }
     
@@ -83,28 +80,20 @@ public class MergeSort {
         // copy smallest value from either left or right arrays into output
         while (i <= middle && j <= high) {
             if (temp[i] <= temp[j]) {
-                nums[k] = temp[i];
-                i++;
+                nums[k++] = temp[i++];
             } else {
-                nums[k] = temp[j];
-                j++;
+                nums[k++] = temp[j++];
             }
-            
-            k++;
         }
 
         // If left array not yet exhausted, copy across the remaining items
         while (i <= middle) {
-            nums[k] = temp[i];
-            i++;
-            k++;            
+            nums[k++] = temp[i++];
         }
 
         // If right array not yet exhausted, copy across the remaining items
         while (j <= high) {
-            nums[k] = temp[j];
-            j++;
-            k++;            
+            nums[k++] = temp[j++];
         }
     }
     

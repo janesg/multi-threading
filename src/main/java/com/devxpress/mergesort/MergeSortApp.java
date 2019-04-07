@@ -17,7 +17,7 @@ public class MergeSortApp {
 
         // Small number of elements... sequential should be faster
         System.out.print("\nParallel merge sort with small number of items...");
-        demoParallelVersusSequential(1000);
+        demoParallelVersusSequential(10000);
         
     }
     
