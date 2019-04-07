@@ -2,9 +2,9 @@ package com.devxpress.forkjoinmergesort;
 
 import java.util.Arrays;
 
-public class SequentialMergeSort {
+public class MergeSort {
 
-    static void mergeSort(int[] arrayToSort) {
+    static void sort(int[] arrayToSort) {
 
         // Recursive base case:
         // - when only 1 element in array it must be sorted
@@ -18,13 +18,17 @@ public class SequentialMergeSort {
         int[] left = Arrays.copyOfRange(arrayToSort, 0, middle);   // Note, 2nd index is exclusive
         int[] right = Arrays.copyOfRange(arrayToSort, middle, arrayToSort.length);
 
-        mergeSort(left);
-        mergeSort(right);
+        sort(left);
+        sort(right);
 
-        mergeHalves(left, right, arrayToSort);
+        mergeSortedHalves(left, right, arrayToSort);
     }
 
-    static void mergeHalves(int[] leftHalf, int[] rightHalf, int[] original) {
+    static void mergeSortedHalves(int[] leftHalf, int[] rightHalf, int[] output) {
+
+        if (leftHalf.length + rightHalf.length != output.length) {
+            throw new IllegalArgumentException("Combined length of both halves does not equal output length");
+        }
 
         int i = 0;     // Index of the left half
         int j = 0;     // Index of the right half
@@ -34,20 +38,20 @@ public class SequentialMergeSort {
         // copy smallest value from either left or right arrays into output
         while (i < leftHalf.length && j < rightHalf.length) {
             if (leftHalf[i] < rightHalf[j]) {
-                original[k++] = leftHalf[i++];
+                output[k++] = leftHalf[i++];
             } else {
-                original[k++] = rightHalf[j++];
+                output[k++] = rightHalf[j++];
             }
         }
 
         // If left half not yet exhausted, copy across the remaining items
         while (i < leftHalf.length) {
-            original[k++] = leftHalf[i++];
+            output[k++] = leftHalf[i++];
         }
 
         // If right half not yet exhausted, copy across the remaining items
         while (j < rightHalf.length) {
-            original[k++] = rightHalf[j++];
+            output[k++] = rightHalf[j++];
         }
     }
 }

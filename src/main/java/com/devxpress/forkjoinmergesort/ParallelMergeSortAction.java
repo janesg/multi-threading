@@ -17,7 +17,7 @@ public class ParallelMergeSortAction extends RecursiveAction {
     protected void compute() {
 
         if (nums.length <= threshold) {
-            SequentialMergeSort.mergeSort(nums);
+            MergeSort.sort(nums);
             return;
         }
 
@@ -32,7 +32,7 @@ public class ParallelMergeSortAction extends RecursiveAction {
 
         invokeAll(taskLeft, taskRight);
 
-        SequentialMergeSort.mergeHalves(left, right, nums);
+        MergeSort.mergeSortedHalves(left, right, nums);
     }
 
 }

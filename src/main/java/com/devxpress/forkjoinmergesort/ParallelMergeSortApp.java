@@ -29,7 +29,7 @@ public class ParallelMergeSortApp {
 
         System.out.println("=== Sequential Merge Sort ===");
         long start = Instant.now().toEpochMilli();
-        SequentialMergeSort.mergeSort(nums);
+        MergeSort.sort(nums);
         System.out.println("Time taken (ms) : " + (Instant.now().toEpochMilli() - start));
         // showResults(nums);
 
